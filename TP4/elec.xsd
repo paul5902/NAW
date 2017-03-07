@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 sp1 (x64) (http://www.altova.com) by Université des Sciences et Technologies de Lille (Université des Sciences et Technologies de Lille) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:element name="pays">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="circonscriptions">
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="circonscription">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="cantons">
+											<xs:complexType>
+												<xs:sequence maxOccurs="unbounded">
+													<xs:element name="canton">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="communes">
+																	<xs:complexType>
+																		<xs:sequence maxOccurs="unbounded">
+																			<xs:element name="commune">
+																				<xs:complexType>
+																					<xs:sequence maxOccurs="unbounded">
+																						<xs:element name="bureau">
+																							<xs:complexType>
+																								<xs:attribute name="id"/>
+																								<xs:attribute name="nom"/>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																					<xs:attribute name="id"/>
+																					<xs:attribute name="nom"/>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="id"/>
+															<xs:attribute name="nom"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="id"/>
+									<xs:attribute name="nom"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="scrutins">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="legis">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="candidats">
+											<xs:complexType>
+												<xs:sequence maxOccurs="unbounded">
+													<xs:element name="candidat">
+														<xs:complexType>
+															<xs:attribute name="id"/>
+															<xs:attribute name="nom"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="canton">
+											<xs:complexType>
+												<xs:sequence/>
+												<xs:attribute name="id"/>
+												<xs:attribute name="nom"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="presi"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,42 @@
+// veut dire qu'on commence depuis l'origine du document et qu'on cherche dans tous les noeuds du document
+
+Exo1
+--1
+//item[pages>50][type='BD']/prix
+--2
+//item[Coloriste and Dessinateur][type='BD']/titre
+OU
+//item[Coloriste and Dessinateur][type='BD']/titre/text()
+--3 
+//item[contains(resume,"Far West")][type='BD']/titre
+OU
+//item[resume[contains(text(),'Far West')]]/titre
+--4
+distinct-values(//item[serie]/Auteur/text())
+--5
+//item[Auteur=//item[serie="Minuscule"]/Auteur]/titre
+--6
+count(//item[serie="Minuscule"]/titre)
+--7
+//item[serie="Minuscule"][position()=1]/datedeparution/text()
+OU
+//item[serie="Minuscule"][1]/datedeparution/text()
+--8
+//item[serie="Minuscule"][position()<=2]/datedeparution/text()
+--9
+
+Exo2
+Préambule 
+count(//pdv)
+--1
+count(//pdv)
+--2
+count(//pdv[prix/@nom="E10"])
+--3
+//pdv[lower-case(ville)="lille"]/prix[@nom="Gazole"]/@valeur
+--4
+//pdv[services/service="Station de gonflage" and lower-case(ville)="lille"]/adresse/text()
+--5
+distinct-values(//pdv[services/service="Boutique alimentaire" and services/service="Toilettes publiques"]/lower-case(ville))
+--6
+min(//pdv/prix[@nom="SP95"]/@valeur)

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 sp1 (x64) (http://www.altova.com) by Université des Sciences et Technologies de Lille (Université des Sciences et Technologies de Lille) -->
+<!-- édité avec XMLSpy v2017 sp2 (x64) (http://www.altova.com) par Letailleur (Lille1) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:element name="Pays">
+		<xs:annotation>
+			<xs:documentation>Un pays regroupe des villes et des scrutins</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="Scrutin">
+					<xs:annotation>
+						<xs:documentation>Un scrutin est présidentiel ou national</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="Legislatif">
+								<xs:annotation>
+									<xs:documentation>Un scrutin législatif se déroule dans des circonscriptions</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence maxOccurs="unbounded">
+										<xs:element name="Circonscription">
+											<xs:complexType>
+												<xs:sequence maxOccurs="unbounded">
+													<xs:element name="Candidat">
+														<xs:annotation>
+															<xs:documentation>La liste des candidats est propre à la circonscription</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Id" use="required"/>
+															<xs:attribute name="Nom" type="xs:string" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Canton">
+														<xs:complexType>
+															<xs:sequence maxOccurs="unbounded">
+																<xs:element name="Bureau">
+																	<xs:annotation>
+																		<xs:documentation>Un bureau collecte les votes pour le premier et second tours</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="ResultatPremier">
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="NbVotants" type="xs:positiveInteger"/>
+																						<xs:element name="NbNuls" type="xs:positiveInteger"/>
+																						<xs:element name="NbBlanc" type="xs:positiveInteger"/>
+																						<xs:element name="ResCandidat">
+																							<xs:complexType>
+																								<xs:sequence maxOccurs="unbounded">
+																									<xs:element name="Candidat">
+																										<xs:complexType>
+																											<xs:attribute name="NbVoies" type="xs:positiveInteger"/>
+																											<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+																										</xs:complexType>
+																									</xs:element>
+																								</xs:sequence>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="ResultatSecond">
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="NbVotants" type="xs:positiveInteger"/>
+																						<xs:element name="NbNuls" type="xs:positiveInteger"/>
+																						<xs:element name="NbBlanc" type="xs:positiveInteger"/>
+																						<xs:element name="ResCandidat">
+																							<xs:complexType>
+																								<xs:sequence minOccurs="2" maxOccurs="2">
+																									<xs:element name="Candidat">
+																										<xs:complexType>
+																											<xs:attribute name="NbVoies" type="xs:positiveInteger"/>
+																											<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+																										</xs:complexType>
+																									</xs:element>
+																								</xs:sequence>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																		<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="National">
+								<xs:complexType>
+									<xs:sequence maxOccurs="unbounded">
+										<xs:element name="Candidat">
+											<xs:annotation>
+												<xs:documentation>La liste des candidats est commune à l'ensemble de l'élection nationale</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+												<xs:attribute name="Nom" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Bureau">
+											<xs:annotation>
+												<xs:documentation>Un bureau collecte les votes pour les premier et second tours</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ResultatPremier">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="NbVotants" type="xs:positiveInteger"/>
+																<xs:element name="NbNuls" type="xs:positiveInteger"/>
+																<xs:element name="NbBlanc" type="xs:positiveInteger"/>
+																<xs:element name="ResCandidat">
+																	<xs:complexType>
+																		<xs:sequence maxOccurs="unbounded">
+																			<xs:element name="Candidat">
+																				<xs:complexType>
+																					<xs:attribute name="NbVoies" type="xs:positiveInteger"/>
+																					<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="ResultatSecond">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="NbVotants" type="xs:positiveInteger"/>
+																<xs:element name="NbNuls" type="xs:positiveInteger"/>
+																<xs:element name="NbBlanc" type="xs:positiveInteger"/>
+																<xs:element name="ResCandidat">
+																	<xs:complexType>
+																		<xs:sequence minOccurs="2" maxOccurs="2">
+																			<xs:element name="Candidat">
+																				<xs:complexType>
+																					<xs:attribute name="NbVoies" type="xs:positiveInteger"/>
+																					<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Ville">
+					<xs:annotation>
+						<xs:documentation>Une ville regroupe des bureaux de votes, chacun situé sur un canton. Donc une ville peut faire partie de plusieurs cantons</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="Bureau">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Canton">
+											<xs:complexType>
+												<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+												<xs:attribute name="Nom" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="NbInscrits" type="xs:positiveInteger"/>
+									<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+									<xs:attribute name="Nom" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Id" type="xs:positiveInteger" use="required"/>
+						<xs:attribute name="Nom" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="KeyIdBureau">
+			<xs:selector xpath="Ville/Bureau"/>
+			<xs:field xpath="@Id"/>
+		</xs:key>
+		<xs:keyref name="RefIdBureauLegis" refer="KeyIdBureau">
+			<xs:selector xpath="Scrutin/Legislatif/Circonscription/Canton/Bureau"/>
+			<xs:field xpath="@Id"/>
+		</xs:keyref>
+		<xs:keyref name="RefIdBureauNatio" refer="KeyIdBureau">
+			<xs:selector xpath="Scrutin/National/Bureau"/>
+			<xs:field xpath="@Id"/>
+		</xs:keyref>
+		<xs:key name="KeyCandidatNatio">
+			<xs:selector xpath="Scrutin/National/Candidat"/>
+			<xs:field xpath="@Id"/>
+		</xs:key>
+		<xs:keyref name="RefIdCandidatNatioPT" refer="KeyCandidatNatio">
+			<xs:selector xpath="Scrutin/National/Bureau/ResultatPremier/ResCandidat/Candidat"/>
+			<xs:field xpath="@Id"/>
+		</xs:keyref>
+		<xs:key name="KeyCandidatLegis">
+			<xs:selector xpath="Scrutin/Legislatif/Circonscription/Candidat"/>
+			<xs:field xpath="@Id"/>
+		</xs:key>
+		<xs:keyref name="RefIdCandidatLegisPT" refer="KeyCandidatLegis">
+			<xs:selector xpath="Scrutin/Legislatif/Circonscription/Canton/Bureau/ResultatPremier/ResCandidat/Candidat"/>
+			<xs:field xpath="@Id"/>
+		</xs:keyref>
+		<xs:key name="KeyCanton">
+			<xs:selector xpath="Ville/Bureau/Canton"/>
+			<xs:field xpath="@Id"/>
+		</xs:key>
+		<xs:keyref name="RefIdCantonLegis" refer="KeyCanton">
+			<xs:selector xpath="Scrutin/Legislatif/Circonscription/Canton"/>
+			<xs:field xpath="@Id"/>
+		</xs:keyref>
+		<xs:keyref name="RefIdCandidatNatioST" refer="KeyCandidatNatio">
+			<xs:selector xpath="Scrutin/National/Bureau/ResultatSecond/ResCandidat/Candidat"/>
+			<xs:field xpath="@Id"/>
+		</xs:keyref>
+		<xs:keyref name="RefIdCandidatLegisST" refer="KeyCandidatLegis">
+			<xs:selector xpath="Scrutin/Legislatif/Circonscription/Canton/Bureau/ResultatSecond/ResCandidat/Candidat"/>
+			<xs:field xpath="@Id"/>
+		</xs:keyref>
+	</xs:element>
+</xs:schema>
