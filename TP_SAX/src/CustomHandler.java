@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -5,15 +7,17 @@ import org.xml.sax.helpers.DefaultHandler;
 public class CustomHandler extends DefaultHandler {
 	int nbBalises = 0;
 	String tagCourant = null;
-	Point pointCourant = null;
+	Point pointCourant = new Point();
 	double distanceTot = 0;
 	int altMax = 0;
 	int altMin = 9999;
 	int compteur = 2;
+	int denivelePositif = 0;
+	int deniveleNegatif = 0;
 
 	public void startElement(String nameSpace, String localName, String qName, Attributes attr) throws SAXException {
 		tagCourant = qName;
-		System.out.println("DÃ©but du noeud " + qName);
+		System.out.println("Début du noeud " + qName);
 
 		if(compteur>0) {
 			compteur --;
@@ -21,11 +25,12 @@ public class CustomHandler extends DefaultHandler {
 		
 
 		if (tagCourant.equals("trkpt")) {
-			if(pointCourant!=null) {
+			if(pointCourant.getLat()!=0 && pointCourant.getLong()!=0) {
 				distanceTot+=distance(pointCourant.getLat(),pointCourant.getLong(),Double.parseDouble(attr.getValue(0)),Double.parseDouble(attr.getValue(1)));
 			}
 			nbBalises++;
-			pointCourant = new Point(Double.parseDouble(attr.getValue(0)), Double.parseDouble(attr.getValue(1)));
+			pointCourant.setLat(Double.parseDouble(attr.getValue(0)));
+			pointCourant.setLong(Double.parseDouble(attr.getValue(1)));
 			
 		}
 	}
@@ -39,24 +44,42 @@ public class CustomHandler extends DefaultHandler {
 	public void endDocument() {
 
 		System.out.println("End parsing");
-		System.out.println("Nombre de points de l'itinÃ©raire:  " + nbBalises);
+		System.out.println("Nombre de points de l'itinéraire:  " + nbBalises);
 		System.out.println("Distance totale:"+distanceTot);
 		System.out.println("Alt mini :"+altMin+", Alt max : "+altMax);
+		System.out.println("Dénivelé positif: " + denivelePositif+ ", dénivelé négatif: "+deniveleNegatif);
 
 	}
 
 	public void endElement(String uri, String localName, String qName) {
-		System.out.println("Fin de l'Ã©lÃ©ment " + qName);
+		System.out.println("Fin de l'élément " + qName);
+		tagCourant = null;
 
 	}
 
 	public void characters(char[] data, int start, int end) {
 		String str = new String(data, start, end);
-		if(tagCourant.equals("ele")) {
-			if(Integer.parseInt(str)>altMax) {
+		
+		
+		
+		if(tagCourant!=null && tagCourant.equals("ele")) {
+			int currentAlt = Integer.parseInt(str);
+			int altPointCourrant = pointCourant.getAltitude();
+			System.out.println(altPointCourrant);
+			if(altPointCourrant != 0) {
+				if(currentAlt>altPointCourrant) {
+					denivelePositif+=currentAlt-altPointCourrant;
+				}
+				if(currentAlt<altPointCourrant) {
+					deniveleNegatif+=currentAlt-altPointCourrant;
+				}
+			}
+			pointCourant.setAltitude(currentAlt);
+			
+			if(currentAlt>altMax) {
 				altMax = Integer.parseInt(str);
 			}
-			if(Integer.parseInt(str)<altMin) {
+			if(currentAlt<altMin) {
 				altMin = Integer.parseInt(str);
 			}
 
